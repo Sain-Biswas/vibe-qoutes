@@ -109,26 +109,31 @@ export function TagGrid({ tags }: TagGridProps) {
           filteredTags.map((tag) => (
             <Card 
               key={tag.id} 
-              className="bloom-card group hover:scale-[1.03] hover:shadow-2xl hover:shadow-primary/5 transition-all duration-500 cursor-pointer overflow-hidden border-none bg-surface-soft/40"
+              className="relative bloom-card group hover:scale-[1.03] transition-all duration-500 cursor-pointer overflow-hidden border-none bg-surface-soft/40 grain-overlay"
               onClick={() => handleTagClick(tag)}
             >
-              <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
-                <Hash className="size-12" />
+              <img 
+                src="/images/texture-light.png" 
+                className="absolute inset-0 w-full h-full object-cover opacity-5 group-hover:opacity-10 transition-opacity" 
+                alt=""
+              />
+              <div className="absolute top-0 right-0 p-6 opacity-5 group-hover:opacity-10 transition-opacity">
+                <Hash className="size-20" />
               </div>
-              <CardHeader className="pb-2">
+              <CardHeader className="relative z-10 pb-2">
                 <div className="flex items-center justify-between">
                   <Badge variant="outline" className="rounded-full bg-primary/10 border-primary/20 text-primary font-bold px-3">
-                    {tag._count.snippets}
+                    {tag._count.snippets} Fragments
                   </Badge>
                 </div>
-                <CardTitle className="text-2xl font-serif mt-4 group-hover:text-primary transition-colors">
+                <CardTitle className="text-3xl font-serif mt-6 group-hover:text-primary transition-colors leading-tight">
                   {tag.name}
                 </CardTitle>
               </CardHeader>
-              <CardContent>
-                <div className="flex items-center gap-2 text-xs text-muted-foreground font-sans mt-2">
+              <CardContent className="relative z-10">
+                <div className="flex items-center gap-2 text-xs text-muted-foreground font-sans mt-4 opacity-70">
                   <Calendar className="size-3" />
-                  <span>Modified {new Date(tag.updatedAt).toLocaleDateString()}</span>
+                  <span>Curated {new Date(tag.updatedAt).toLocaleDateString()}</span>
                 </div>
               </CardContent>
             </Card>

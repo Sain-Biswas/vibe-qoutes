@@ -35,7 +35,7 @@ interface AddSnippetDialogProps {
 export function AddSnippetDialog({ tags, sources }: AddSnippetDialogProps) {
   const [isOpen, setIsOpen] = useState(false);
   const [content, setContent] = useState("");
-  const [selectedSourceId, setSelectedSourceId] = useState<string>("");
+  const [selectedSourceId, setSelectedSourceId] = useState<string | null>(null);
   const [selectedTagIds, setSelectedTagIds] = useState<string[]>([]);
   const [isLoading, setIsLoading] = useState(false);
 
@@ -46,14 +46,14 @@ export function AddSnippetDialog({ tags, sources }: AddSnippetDialogProps) {
       return;
     }
     setIsLoading(true);
-    const res = await createSnippet(content, selectedSourceId === "none" ? undefined : selectedSourceId, selectedTagIds);
+    const res = await createSnippet(content, selectedSourceId === "none" || !selectedSourceId ? undefined : selectedSourceId, selectedTagIds);
     setIsLoading(false);
     if (res.error) {
       toast.error(res.error);
     } else {
       toast.success("Snippet saved!");
       setContent("");
-      setSelectedSourceId("");
+      setSelectedSourceId(null);
       setSelectedTagIds([]);
       setIsOpen(false);
     }
@@ -94,7 +94,7 @@ export function AddSnippetDialog({ tags, sources }: AddSnippetDialogProps) {
 
             <div className="space-y-2">
               <Label htmlFor="source" className="ml-1 text-sm font-medium">Source (Optional)</Label>
-              <Select value={selectedSourceId} onValueChange={(val) => setSelectedSourceId(val || "")}>
+              <Select value={selectedSourceId} onValueChange={setSelectedSourceId}>
                 <SelectTrigger className="rounded-xl bg-surface-soft/50 border-border/50">
                   <SelectValue placeholder="Select a source..." />
                 </SelectTrigger>

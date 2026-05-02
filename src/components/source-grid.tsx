@@ -4,6 +4,7 @@ import { useState, useMemo } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { BookOpen, User, Calendar, Search } from "lucide-react";
 import { Input } from "@/components/ui/input";
+import { Badge } from "@/components/ui/badge";
 
 interface SourceGridProps {
   sources: any[];
@@ -40,26 +41,42 @@ export function SourceGrid({ sources }: SourceGridProps) {
           </div>
         ) : (
           filteredSources.map((source) => (
-            <Card key={source.id} className="bloom-card group hover:shadow-xl transition-all duration-500 border-none bg-surface-soft/40">
-              <CardHeader className="pb-2">
-                <div className="size-10 rounded-xl bg-primary/10 text-primary flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
-                  <BookOpen className="size-5" />
+            <Card key={source.id} className="relative bloom-card group hover:scale-[1.02] transition-all duration-500 border-none bg-card/60 backdrop-blur-sm overflow-hidden grain-overlay">
+              <img 
+                src="/images/texture-dark.png" 
+                className="absolute inset-0 w-full h-full object-cover opacity-5 group-hover:opacity-10 transition-opacity" 
+                alt=""
+              />
+              <CardHeader className="relative z-10 pb-4">
+                <div className="flex items-center justify-between mb-4">
+                  <div className="size-12 rounded-2xl bg-primary/10 text-primary flex items-center justify-center group-hover:scale-110 transition-transform shadow-sm">
+                    <BookOpen className="size-6" />
+                  </div>
+                  <Badge variant="outline" className="rounded-full bg-secondary text-[10px] uppercase tracking-widest font-bold">
+                    Archive
+                  </Badge>
                 </div>
-                <CardTitle className="text-2xl font-serif leading-tight">
+                <CardTitle className="text-3xl font-serif leading-tight tracking-tight group-hover:text-primary transition-colors">
                   {source.title}
                 </CardTitle>
               </CardHeader>
-              <CardContent className="space-y-4">
+              <CardContent className="relative z-10 space-y-6">
                 {source.author && (
-                  <div className="flex items-center gap-2 text-foreground/70">
-                    <User className="size-4 text-primary/60" />
-                    <span className="text-sm font-medium">{source.author}</span>
+                  <div className="flex items-center gap-3 text-foreground/80">
+                    <div className="size-8 rounded-full bg-surface-soft flex items-center justify-center">
+                      <User className="size-4 text-primary/60" />
+                    </div>
+                    <span className="text-sm font-serif font-medium italic">{source.author}</span>
                   </div>
                 )}
                 
-                <div className="flex items-center gap-2 text-xs text-muted-foreground pt-2 border-t border-border/40">
-                  <Calendar className="size-3" />
-                  <span>Added {new Date(source.createdAt).toLocaleDateString()}</span>
+                <div className="flex items-center justify-between gap-2 text-[10px] text-muted-foreground uppercase tracking-widest font-bold pt-4 border-t border-border/20">
+                  <div className="flex items-center gap-1.5">
+                    <Calendar className="size-3" />
+                    <span>{new Date(source.createdAt).toLocaleDateString()}</span>
+                  </div>
+                  <span className="text-primary/40">•</span>
+                  <span>{source._count?.snippets || 0} Snippets</span>
                 </div>
               </CardContent>
             </Card>
