@@ -24,6 +24,7 @@ model User {
   accounts      Account[]
   tags          Tag[]
   sources       Source[]
+  snippets      Snippet[]
 
   @@unique([email])
   @@map("user")
@@ -82,6 +83,8 @@ model Tag {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
+  snippets  Snippet[]
+
   @@unique([name, userId])
   @@map("tag")
 }
@@ -95,5 +98,20 @@ model Source {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
+  snippets  Snippet[]
+
   @@map("source")
+}
+model Snippet {
+  id        String   @id @default(cuid())
+  content   String
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  sourceId  String?
+  source    Source?  @relation(fields: [sourceId], references: [id], onDelete: SetNull)
+  tags      Tag[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("snippet")
 }

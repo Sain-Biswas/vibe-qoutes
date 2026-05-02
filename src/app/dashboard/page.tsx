@@ -1,8 +1,10 @@
 import { BookMarked } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { DashboardActions } from "@/components/dashboard-actions";
+import { getTags, getSources } from "@/app/actions/dashboard";
 
-export default function DashboardPage() {
+export default async function DashboardPage() {
+  const [tags, sources] = await Promise.all([getTags(), getSources()]);
   return (
     <div className="p-8 max-w-6xl mx-auto">
       <div className="flex items-center justify-between mb-8">
@@ -10,7 +12,7 @@ export default function DashboardPage() {
           <h1 className="text-4xl font-serif text-foreground mb-2">Your Library</h1>
           <p className="text-muted-foreground text-lg">Manage your snippets, tags, and sources.</p>
         </div>
-        <DashboardActions />
+        <DashboardActions tags={tags} sources={sources} />
       </div>
       
       <div className="flex flex-col items-center justify-center py-24 text-center border border-dashed border-border rounded-[2rem] bg-surface-soft/30">
