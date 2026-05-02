@@ -20,6 +20,10 @@ import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { ThemeToggle } from "@/components/theme-toggle";
+import { authClient } from "@/lib/auth-client";
+import { UserDropdown } from "@/components/user-dropdown";
+import { Sheet, SheetContent, SheetTrigger, SheetTitle, SheetHeader } from "@/components/ui/sheet";
+import { Menu } from "lucide-react";
 
 /* ── Static Data ─────────────────────────────────────── */
 
@@ -114,6 +118,7 @@ const STATS = [
 /* ── Page ─────────────────────────────────────────────── */
 
 export default function Home() {
+  const { data: session } = authClient.useSession();
   const [activeTag, setActiveTag] = useState(TAG_CATEGORIES[0].name);
 
   useEffect(() => {
@@ -214,11 +219,46 @@ export default function Home() {
 
           <div className="flex items-center gap-3">
             <ThemeToggle />
-            <Link href="/sign-up">
-              <Button id="nav-cta" size="default" className="hidden sm:flex text-[15px]">
-                Start Collecting
-              </Button>
-            </Link>
+            {session ? (
+              <UserDropdown />
+            ) : (
+              <Link href="/sign-up">
+                <Button id="nav-cta" size="default" className="hidden sm:flex text-[15px]">
+                  Start Collecting
+                </Button>
+              </Link>
+            )}
+            
+            {/* Mobile Nav */}
+            <div className="md:hidden">
+              <Sheet>
+                <SheetTrigger className="inline-flex items-center justify-center whitespace-nowrap rounded-full text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 hover:bg-accent hover:text-accent-foreground h-9 w-9">
+                  <Menu className="size-5" />
+                </SheetTrigger>
+                <SheetContent side="right" className="w-[300px] sm:w-[400px] border-border/50 bg-background/95 backdrop-blur-xl">
+                  <SheetHeader>
+                    <SheetTitle className="text-left font-serif text-2xl mb-4">Navigation</SheetTitle>
+                  </SheetHeader>
+                  <div className="flex flex-col gap-6 mt-6">
+                    <a href="#features" className="text-lg font-medium text-foreground/80 hover:text-primary transition-colors">Features</a>
+                    <a href="#snippets" className="text-lg font-medium text-foreground/80 hover:text-primary transition-colors">Examples</a>
+                    <a href="#sources" className="text-lg font-medium text-foreground/80 hover:text-primary transition-colors">Sources</a>
+                    <a href="#tags" className="text-lg font-medium text-foreground/80 hover:text-primary transition-colors">Taxonomy</a>
+                    
+                    {!session && (
+                      <div className="pt-6 border-t border-border/40 flex flex-col gap-3">
+                        <Link href="/sign-in">
+                          <Button variant="outline" className="w-full justify-center">Sign In</Button>
+                        </Link>
+                        <Link href="/sign-up">
+                          <Button className="w-full justify-center">Start Collecting</Button>
+                        </Link>
+                      </div>
+                    )}
+                  </div>
+                </SheetContent>
+              </Sheet>
+            </div>
           </div>
         </div>
       </nav>

@@ -7,6 +7,9 @@ export const auth = betterAuth({
     database: prismaAdapter(prisma, {
         provider: "sqlite",
     }),
+    advanced: {
+        cookiePrefix: "vibe-snippets",
+    },
     emailAndPassword: {
         enabled: true,
         autoSignIn: true,

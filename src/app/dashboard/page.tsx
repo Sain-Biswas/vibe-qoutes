@@ -1,34 +1,30 @@
-import { BookOpen } from "lucide-react";
-import Link from "next/link";
-import { ThemeToggle } from "@/components/theme-toggle";
+import { BookMarked } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { DashboardActions } from "@/components/dashboard-actions";
 
 export default function DashboardPage() {
   return (
-    <div className="min-h-screen bg-background">
-      <nav className="border-b border-border/40">
-        <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-6">
-          <Link href="/" className="flex items-center gap-2.5 group">
-            <div className="flex size-8 items-center justify-center rounded-full bg-primary text-primary-foreground">
-              <BookOpen className="size-4" />
-            </div>
-            <span className="text-xl font-medium tracking-tight font-serif text-foreground">
-              Snippets
-            </span>
-          </Link>
-          <div className="flex items-center gap-4">
-            <ThemeToggle />
-            <div className="size-8 rounded-full bg-primary/20 flex items-center justify-center font-medium font-serif">
-              U
-            </div>
-          </div>
+    <div className="p-8 max-w-6xl mx-auto">
+      <div className="flex items-center justify-between mb-8">
+        <div>
+          <h1 className="text-4xl font-serif text-foreground mb-2">Your Library</h1>
+          <p className="text-muted-foreground text-lg">Manage your snippets, tags, and sources.</p>
         </div>
-      </nav>
-      <main className="mx-auto max-w-7xl px-6 py-12">
-        <h1 className="text-4xl font-serif mb-6 text-foreground">Your Library</h1>
-        <div className="p-12 text-center border border-dashed border-border rounded-[2rem] bg-surface-soft/30">
-          <p className="text-muted-foreground">You haven't saved any snippets yet.</p>
+        <DashboardActions />
+      </div>
+      
+      <div className="flex flex-col items-center justify-center py-24 text-center border border-dashed border-border rounded-[2rem] bg-surface-soft/30">
+        <div className="flex size-16 items-center justify-center rounded-full bg-primary/10 text-primary mb-6">
+          <BookMarked className="size-8" />
         </div>
-      </main>
+        <h3 className="text-2xl font-serif font-medium mb-2">No snippets yet</h3>
+        <p className="text-muted-foreground max-w-sm mb-8">
+          Start building your library of wisdom by saving your first passage.
+        </p>
+        <Button variant="outline" className="rounded-full h-12 px-8">
+          Add Snippet
+        </Button>
+      </div>
     </div>
   );
 }

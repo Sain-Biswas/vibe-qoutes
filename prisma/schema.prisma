@@ -22,6 +22,8 @@ model User {
   updatedAt     DateTime
   sessions      Session[]
   accounts      Account[]
+  tags          Tag[]
+  sources       Source[]
 
   @@unique([email])
   @@map("user")
@@ -70,4 +72,28 @@ model Verification {
   updatedAt  DateTime?
 
   @@map("verification")
+}
+
+model Tag {
+  id        String   @id @default(cuid())
+  name      String
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([name, userId])
+  @@map("tag")
+}
+
+model Source {
+  id        String   @id @default(cuid())
+  title     String
+  author    String?
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("source")
 }
