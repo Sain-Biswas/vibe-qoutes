@@ -1,51 +1,35 @@
 import { getTags } from "@/app/actions/dashboard";
-import { Badge } from "@/components/ui/badge";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Hash, Layers } from "lucide-react";
+import { TagGrid } from "@/components/tag-grid";
+import { AddTagDialog } from "@/components/add-tag-dialog";
+import { Layers } from "lucide-react";
 
 export default async function TagsPage() {
   const tags = await getTags();
 
   return (
-    <div className="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-700">
-      <div className="flex items-center justify-between">
-        <div>
-          <h1 className="text-4xl font-serif font-medium text-foreground tracking-tight">Taxonomy</h1>
-          <p className="text-muted-foreground mt-2 font-sans">Organize your thoughts with tags and themes.</p>
-        </div>
-        <div className="flex items-center gap-2 px-4 py-2 bg-primary/5 rounded-full border border-primary/10">
-          <Layers className="size-4 text-primary" />
-          <span className="text-sm font-medium text-primary">{tags.length} Tags Total</span>
+    <div className="space-y-10 animate-in fade-in slide-in-from-bottom-4 duration-700">
+      <div className="relative h-48 w-full rounded-[2rem] overflow-hidden border border-border/40 group">
+        <img 
+          src="/resources/4.webp" 
+          alt="Taxonomy Hero" 
+          className="absolute inset-0 w-full h-full object-cover opacity-60 group-hover:scale-105 transition-transform duration-700"
+        />
+        <div className="absolute inset-0 bg-gradient-to-r from-background via-background/60 to-transparent flex items-center justify-between px-10">
+          <div>
+            <h1 className="text-4xl font-serif font-medium text-foreground tracking-tight">Taxonomy</h1>
+            <p className="text-muted-foreground mt-2 font-sans max-w-sm">Organize your thoughts into a structured web of meaning.</p>
+          </div>
+          <div className="flex items-center gap-3">
+            <div className="flex items-center gap-2 px-4 py-2 bg-background/80 backdrop-blur-md rounded-full border border-border/40 shadow-sm">
+              <Layers className="size-4 text-primary" />
+              <span className="text-sm font-medium text-primary">{tags.length} Tags Total</span>
+            </div>
+            <AddTagDialog />
+          </div>
         </div>
       </div>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
-        {tags.length === 0 ? (
-          <div className="col-span-full py-20 text-center border-2 border-dashed border-muted rounded-[2rem]">
-            <Hash className="size-12 text-muted mx-auto mb-4" />
-            <h3 className="text-xl font-serif font-medium">No tags yet</h3>
-            <p className="text-muted-foreground mt-2">Start by adding a new tag from the dashboard.</p>
-          </div>
-        ) : (
-          tags.map((tag) => (
-            <Card key={tag.id} className="bloom-card group hover:scale-[1.02] transition-all duration-300">
-              <CardHeader className="pb-2">
-                <CardTitle className="text-xl font-serif flex items-center justify-between">
-                  <span className="truncate">{tag.name}</span>
-                  <Badge variant="secondary" className="font-sans font-normal rounded-full">
-                    {tag._count.snippets}
-                  </Badge>
-                </CardTitle>
-              </CardHeader>
-              <CardContent>
-                <div className="flex items-center text-xs text-muted-foreground font-sans">
-                  <span>Created {new Date(tag.createdAt).toLocaleDateString()}</span>
-                </div>
-              </CardContent>
-            </Card>
-          ))
-        )}
-      </div>
+      <TagGrid tags={tags} />
     </div>
   );
 }

@@ -105,6 +105,12 @@ export async function getTags() {
     where: { userId: session.user.id },
     orderBy: { createdAt: "desc" },
     include: {
+      snippets: {
+        include: {
+          source: true,
+          tags: true,
+        },
+      },
       _count: {
         select: { snippets: true },
       },

@@ -1,3 +1,8 @@
+> "The only way to do great work is to love what you do."
+>
+> — *Steve Jobs, 2005*
+
+
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
 ## Getting Started

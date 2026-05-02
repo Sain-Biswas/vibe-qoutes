@@ -1,43 +1,40 @@
 "use client";
 
+import * as React from "react";
+import { Moon, Sun } from "lucide-react";
 import { useTheme } from "next-themes";
-import { useEffect, useState } from "react";
-import { Moon, Sun, Monitor } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 export function ThemeToggle() {
   const { theme, setTheme } = useTheme();
-  const [mounted, setMounted] = useState(false);
+  const [mounted, setMounted] = React.useState(false);
 
-  useEffect(() => {
+  // Avoid hydration mismatch
+  React.useEffect(() => {
     setMounted(true);
   }, []);
 
   if (!mounted) {
     return (
-      <Button variant="ghost" size="icon" aria-label="Toggle theme">
-        <Sun className="size-4" />
+      <Button variant="ghost" size="icon" className="rounded-full size-9">
+        <div className="size-4" />
       </Button>
     );
   }
-
-  const cycleTheme = () => {
-    if (theme === "light") setTheme("dark");
-    else if (theme === "dark") setTheme("system");
-    else setTheme("light");
-  };
 
   return (
     <Button
       variant="ghost"
       size="icon"
-      onClick={cycleTheme}
+      className="rounded-full size-9 transition-colors hover:bg-surface-soft"
+      onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
       aria-label="Toggle theme"
-      className="relative overflow-hidden"
     >
-      {theme === "light" && <Sun className="size-4 transition-transform duration-300" />}
-      {theme === "dark" && <Moon className="size-4 transition-transform duration-300" />}
-      {theme === "system" && <Monitor className="size-4 transition-transform duration-300" />}
+      {theme === "dark" ? (
+        <Sun className="size-4 transition-all" />
+      ) : (
+        <Moon className="size-4 transition-all" />
+      )}
     </Button>
   );
 }
