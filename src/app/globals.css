@@ -7,7 +7,7 @@
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-sans);
+  --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
   --font-heading: var(--font-sans);
   --color-sidebar-ring: var(--sidebar-ring);
@@ -39,82 +39,126 @@
   --color-popover: var(--popover);
   --color-card-foreground: var(--card-foreground);
   --color-card: var(--card);
-  --radius-sm: calc(var(--radius) * 0.6);
-  --radius-md: calc(var(--radius) * 0.8);
+  
+  /* Increased border radii for the 'Bloom' aesthetic */
+  --radius-sm: calc(var(--radius) * 1.5);
+  --radius-md: calc(var(--radius) * 2);
   --radius-lg: var(--radius);
-  --radius-xl: calc(var(--radius) * 1.4);
-  --radius-2xl: calc(var(--radius) * 1.8);
-  --radius-3xl: calc(var(--radius) * 2.2);
-  --radius-4xl: calc(var(--radius) * 2.6);
+  --radius-xl: calc(var(--radius) * 2.5);
+  --radius-2xl: calc(var(--radius) * 3);
+  --radius-3xl: calc(var(--radius) * 3.5);
+  --radius-4xl: calc(var(--radius) * 4);
+  --radius-full: 9999px;
+
+  /* Custom colors */
+  --color-accent-yellow: var(--accent-yellow);
+  --color-accent-yellow-foreground: var(--accent-yellow-foreground);
+  --color-surface-soft: var(--surface-soft);
 }
 
 :root {
-  --background: oklch(1 0 0);
-  --foreground: oklch(0.145 0 0);
+  /* Very soft, clean background */
+  --background: oklch(0.99 0.002 110);
+  --foreground: oklch(0.20 0.02 120);
+  
   --card: oklch(1 0 0);
-  --card-foreground: oklch(0.145 0 0);
+  --card-foreground: oklch(0.20 0.02 120);
+  
   --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.145 0 0);
-  --primary: oklch(0.205 0 0);
-  --primary-foreground: oklch(0.985 0 0);
-  --secondary: oklch(0.97 0 0);
-  --secondary-foreground: oklch(0.205 0 0);
-  --muted: oklch(0.97 0 0);
-  --muted-foreground: oklch(0.556 0 0);
-  --accent: oklch(0.97 0 0);
-  --accent-foreground: oklch(0.205 0 0);
+  --popover-foreground: oklch(0.20 0.02 120);
+  
+  /* Primary: Olive/Green */
+  --primary: oklch(0.48 0.12 135);
+  --primary-foreground: oklch(0.98 0.01 135);
+  
+  /* Secondary: Soft Gray-Green */
+  --secondary: oklch(0.96 0.01 135);
+  --secondary-foreground: oklch(0.35 0.08 135);
+  
+  /* Muted: Soft backgrounds */
+  --muted: oklch(0.96 0.01 135);
+  --muted-foreground: oklch(0.55 0.04 135);
+  
+  /* Accent: Hover states */
+  --accent: oklch(0.94 0.02 135);
+  --accent-foreground: oklch(0.35 0.08 135);
+  
   --destructive: oklch(0.577 0.245 27.325);
-  --border: oklch(0.922 0 0);
-  --input: oklch(0.922 0 0);
-  --ring: oklch(0.708 0 0);
-  --chart-1: oklch(0.87 0 0);
-  --chart-2: oklch(0.556 0 0);
-  --chart-3: oklch(0.439 0 0);
-  --chart-4: oklch(0.371 0 0);
-  --chart-5: oklch(0.269 0 0);
-  --radius: 0.625rem;
-  --sidebar: oklch(0.985 0 0);
-  --sidebar-foreground: oklch(0.145 0 0);
-  --sidebar-primary: oklch(0.205 0 0);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.97 0 0);
-  --sidebar-accent-foreground: oklch(0.205 0 0);
-  --sidebar-border: oklch(0.922 0 0);
-  --sidebar-ring: oklch(0.708 0 0);
+  --border: oklch(0.92 0.02 135);
+  --input: oklch(0.92 0.02 135);
+  --ring: oklch(0.48 0.12 135);
+  
+  --chart-1: oklch(0.48 0.12 135);
+  --chart-2: oklch(0.85 0.15 90); /* Yellow accent */
+  --chart-3: oklch(0.60 0.10 135);
+  --chart-4: oklch(0.70 0.15 90);
+  --chart-5: oklch(0.40 0.08 135);
+  
+  /* Base radius is large for the airy feel */
+  --radius: 1.25rem;
+  
+  --sidebar: oklch(0.98 0.01 135);
+  --sidebar-foreground: oklch(0.20 0.02 120);
+  --sidebar-primary: oklch(0.48 0.12 135);
+  --sidebar-primary-foreground: oklch(0.98 0.01 135);
+  --sidebar-accent: oklch(0.94 0.02 135);
+  --sidebar-accent-foreground: oklch(0.35 0.08 135);
+  --sidebar-border: oklch(0.92 0.02 135);
+  --sidebar-ring: oklch(0.48 0.12 135);
+  
+  /* Yellow accents */
+  --accent-yellow: oklch(0.85 0.15 90);
+  --accent-yellow-foreground: oklch(0.30 0.05 90);
+  --surface-soft: oklch(0.97 0.01 135 / 50%);
 }
 
 .dark {
-  --background: oklch(0.145 0 0);
-  --foreground: oklch(0.985 0 0);
-  --card: oklch(0.205 0 0);
-  --card-foreground: oklch(0.985 0 0);
-  --popover: oklch(0.205 0 0);
-  --popover-foreground: oklch(0.985 0 0);
-  --primary: oklch(0.922 0 0);
-  --primary-foreground: oklch(0.205 0 0);
-  --secondary: oklch(0.269 0 0);
-  --secondary-foreground: oklch(0.985 0 0);
-  --muted: oklch(0.269 0 0);
-  --muted-foreground: oklch(0.708 0 0);
-  --accent: oklch(0.269 0 0);
-  --accent-foreground: oklch(0.985 0 0);
+  /* Deep forest/charcoal background */
+  --background: oklch(0.18 0.01 135);
+  --foreground: oklch(0.95 0.01 135);
+  
+  --card: oklch(0.22 0.015 135);
+  --card-foreground: oklch(0.95 0.01 135);
+  
+  --popover: oklch(0.22 0.015 135);
+  --popover-foreground: oklch(0.95 0.01 135);
+  
+  /* Primary: Brighter Olive/Green for dark mode */
+  --primary: oklch(0.75 0.15 135);
+  --primary-foreground: oklch(0.18 0.02 135);
+  
+  --secondary: oklch(0.26 0.02 135);
+  --secondary-foreground: oklch(0.90 0.02 135);
+  
+  --muted: oklch(0.26 0.02 135);
+  --muted-foreground: oklch(0.70 0.03 135);
+  
+  --accent: oklch(0.30 0.03 135);
+  --accent-foreground: oklch(0.95 0.01 135);
+  
   --destructive: oklch(0.704 0.191 22.216);
   --border: oklch(1 0 0 / 10%);
   --input: oklch(1 0 0 / 15%);
-  --ring: oklch(0.556 0 0);
-  --chart-1: oklch(0.87 0 0);
-  --chart-2: oklch(0.556 0 0);
-  --chart-3: oklch(0.439 0 0);
-  --chart-4: oklch(0.371 0 0);
-  --chart-5: oklch(0.269 0 0);
-  --sidebar: oklch(0.205 0 0);
-  --sidebar-foreground: oklch(0.985 0 0);
-  --sidebar-primary: oklch(0.488 0.243 264.376);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.269 0 0);
-  --sidebar-accent-foreground: oklch(0.985 0 0);
+  --ring: oklch(0.75 0.15 135);
+  
+  --chart-1: oklch(0.75 0.15 135);
+  --chart-2: oklch(0.85 0.15 90);
+  --chart-3: oklch(0.65 0.12 135);
+  --chart-4: oklch(0.75 0.15 90);
+  --chart-5: oklch(0.55 0.10 135);
+  
+  --sidebar: oklch(0.20 0.015 135);
+  --sidebar-foreground: oklch(0.95 0.01 135);
+  --sidebar-primary: oklch(0.75 0.15 135);
+  --sidebar-primary-foreground: oklch(0.18 0.02 135);
+  --sidebar-accent: oklch(0.30 0.03 135);
+  --sidebar-accent-foreground: oklch(0.95 0.01 135);
   --sidebar-border: oklch(1 0 0 / 10%);
-  --sidebar-ring: oklch(0.556 0 0);
+  --sidebar-ring: oklch(0.75 0.15 135);
+  
+  --accent-yellow: oklch(0.85 0.15 90);
+  --accent-yellow-foreground: oklch(0.20 0.05 90);
+  --surface-soft: oklch(0.24 0.02 135 / 50%);
 }
 
 @layer base {
@@ -122,9 +166,136 @@
     @apply border-border outline-ring/50;
   }
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background text-foreground tracking-tight;
   }
   html {
-    @apply font-sans;
+    @apply font-sans scroll-smooth;
   }
+  
+  /* Making headings feel more like the reference (tighter tracking, specific weights) */
+  h1, h2, h3, h4, h5, h6 {
+    @apply tracking-tighter font-medium;
+  }
+}
+
+/* ── Landing page specific aesthetic utilities ─────────────────────────── */
+
+.bloom-card {
+  @apply rounded-[2rem] bg-card border border-border/50 shadow-[0_8px_30px_rgb(0,0,0,0.04)] transition-all duration-300;
+}
+
+.dark .bloom-card {
+  @apply shadow-[0_8px_30px_rgb(0,0,0,0.2)];
+}
+
+.bloom-card-hover:hover {
+  @apply shadow-[0_20px_40px_rgb(0,0,0,0.08)] -translate-y-1 border-primary/20;
+}
+
+.dark .bloom-card-hover:hover {
+  @apply shadow-[0_20px_40px_rgb(0,0,0,0.3)] border-primary/30;
+}
+
+/* Organic Gradient Backgrounds for Hero */
+.bloom-gradient-bg {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background: 
+    radial-gradient(circle at 15% 50%, oklch(0.96 0.04 135) 0%, transparent 50%),
+    radial-gradient(circle at 85% 30%, oklch(0.98 0.06 90) 0%, transparent 50%);
+  filter: blur(60px);
+  opacity: 0.8;
+  pointer-events: none;
+}
+
+.dark .bloom-gradient-bg {
+  background: 
+    radial-gradient(circle at 15% 50%, oklch(0.25 0.05 135) 0%, transparent 50%),
+    radial-gradient(circle at 85% 30%, oklch(0.22 0.04 90) 0%, transparent 50%);
+  opacity: 0.5;
+}
+
+/* Glassmorphism pill navigation */
+.bloom-nav-pill {
+  @apply bg-background/80 backdrop-blur-xl border border-border shadow-sm rounded-full;
+}
+
+/* Animations */
+@keyframes fade-in-up {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-15px); }
+}
+
+@keyframes float-delayed {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(15px); }
+}
+
+@keyframes pulse-glow {
+  0%, 100% { opacity: 0.8; filter: blur(60px); }
+  50% { opacity: 1; filter: blur(80px); }
+}
+
+.animate-fade-in-up {
+  animation: fade-in-up 0.8s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.animate-fade-in {
+  animation: fade-in 0.8s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.animate-float {
+  animation: float 6s ease-in-out infinite;
+}
+
+.animate-float-delayed {
+  animation: float-delayed 7s ease-in-out infinite;
+}
+
+.bloom-gradient-bg {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background: 
+    radial-gradient(circle at 15% 50%, oklch(0.96 0.04 135) 0%, transparent 50%),
+    radial-gradient(circle at 85% 30%, oklch(0.98 0.06 90) 0%, transparent 50%);
+  animation: pulse-glow 10s ease-in-out infinite;
+  pointer-events: none;
+}
+
+.dark .bloom-gradient-bg {
+  background: 
+    radial-gradient(circle at 15% 50%, oklch(0.25 0.05 135) 0%, transparent 50%),
+    radial-gradient(circle at 85% 30%, oklch(0.22 0.04 90) 0%, transparent 50%);
+}
+
+.animation-delay-100 { animation-delay: 100ms; }
+.animation-delay-200 { animation-delay: 200ms; }
+.animation-delay-300 { animation-delay: 300ms; }
+.animation-delay-400 { animation-delay: 400ms; }
+
+/* Subtle grain texture to add richness */
+.grain-overlay::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.025'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 10;
+  opacity: 0.5;
+}
+
+.dark .grain-overlay::after {
+  opacity: 0.3;
 }
