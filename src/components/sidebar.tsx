@@ -89,9 +89,12 @@ export function Sidebar() {
           </nav>
 
           {/* User Section (Desktop) */}
-          <div className="hidden lg:flex items-center justify-between p-4 border-t border-border/40">
-            <ThemeToggle />
-            <UserDropdown />
+          <div className="hidden lg:flex flex-col gap-4 p-4 border-t border-border/40 bg-surface-soft/20">
+            <div className="flex items-center justify-between px-2">
+              <span className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground/60">Appearance</span>
+              <ThemeToggle />
+            </div>
+            <UserDropdown mode="full" />
           </div>
         </div>
       </div>
