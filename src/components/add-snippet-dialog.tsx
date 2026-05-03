@@ -96,7 +96,9 @@ export function AddSnippetDialog({ tags, sources }: AddSnippetDialogProps) {
               <Label htmlFor="source" className="ml-1 text-sm font-medium">Source (Optional)</Label>
               <Select value={selectedSourceId} onValueChange={setSelectedSourceId}>
                 <SelectTrigger className="rounded-xl bg-surface-soft/50 border-border/50">
-                  <SelectValue placeholder="Select a source..." />
+                  <span className="flex items-center gap-1.5 truncate text-muted-foreground data-[has-value=true]:text-foreground" data-has-value={!!selectedSourceId}>
+                    {selectedSourceId === "none" ? "None" : (selectedSourceId ? sources.find(s => s.id === selectedSourceId)?.title : "Select a source...")}
+                  </span>
                 </SelectTrigger>
                 <SelectContent className="rounded-xl">
                   <SelectItem value="none">None</SelectItem>

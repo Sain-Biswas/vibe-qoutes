@@ -94,6 +94,16 @@ export async function getSources() {
   return await prisma.source.findMany({
     where: { userId: session.user.id },
     orderBy: { title: "asc" },
+    include: {
+      snippets: {
+        include: {
+          tags: true,
+        },
+      },
+      _count: {
+        select: { snippets: true },
+      },
+    },
   });
 }
 
