@@ -41,7 +41,30 @@ export async function createTag(name: string) {
   }
 }
 
-export async function createSource(title: string, author?: string) {
+export async function createSource(data: {
+  title: string;
+  author?: string;
+  type?: string;
+  isbn?: string;
+  publisher?: string;
+  edition?: string;
+  volume?: string;
+  yearPublished?: string;
+  url?: string;
+  websiteName?: string;
+  dateAccessed?: string;
+  platform?: string;
+  channel?: string;
+  scriptureName?: string;
+  tradition?: string;
+  canon?: string;
+  translation?: string;
+  host?: string;
+  doi?: string;
+  journal?: string;
+  institution?: string;
+  notes?: string;
+}) {
   const session = await getSession();
   if (!session?.user) {
     return { error: "Unauthorized" };
@@ -50,19 +73,64 @@ export async function createSource(title: string, author?: string) {
   try {
     const source = await prisma.source.create({
       data: {
-        title,
-        author,
+        title: data.title,
+        author: data.author || null,
+        type: (data.type as any) || "OTHER",
         userId: session.user.id,
+        isbn: data.isbn || null,
+        publisher: data.publisher || null,
+        edition: data.edition || null,
+        volume: data.volume || null,
+        yearPublished: data.yearPublished || null,
+        url: data.url || null,
+        websiteName: data.websiteName || null,
+        dateAccessed: data.dateAccessed || null,
+        platform: data.platform || null,
+        channel: data.channel || null,
+        scriptureName: data.scriptureName || null,
+        tradition: data.tradition || null,
+        canon: data.canon || null,
+        translation: data.translation || null,
+        host: data.host || null,
+        doi: data.doi || null,
+        journal: data.journal || null,
+        institution: data.institution || null,
+        notes: data.notes || null,
       },
     });
     revalidatePath("/dashboard");
+    revalidatePath("/dashboard/sources");
     return { success: true, source };
   } catch (error) {
     return { error: "Failed to create source." };
   }
 }
 
-export async function createSnippet(content: string, sourceId?: string, tagIds: string[] = []) {
+export async function createSnippet(
+  content: string,
+  sourceId?: string,
+  tagIds: string[] = [],
+  location?: {
+    pageNumber?: string;
+    chapter?: string;
+    paragraph?: string;
+    section?: string;
+    verse?: string;
+    timestamp?: string;
+    locationNotes?: string;
+    videoUrl?: string;
+    duration?: string;
+    episodeUrl?: string;
+    episodeNumber?: string;
+    episodeTitle?: string;
+    event?: string;
+    eventDate?: string;
+    eventLocation?: string;
+    scriptureBook?: string;
+    canto?: string;
+    hymn?: string;
+  }
+) {
   const session = await getSession();
   if (!session?.user) return { error: "Unauthorized" };
 
@@ -75,11 +143,30 @@ export async function createSnippet(content: string, sourceId?: string, tagIds: 
         tags: {
           connect: tagIds.map((id) => ({ id })),
         },
+        pageNumber: location?.pageNumber || null,
+        chapter: location?.chapter || null,
+        paragraph: location?.paragraph || null,
+        section: location?.section || null,
+        verse: location?.verse || null,
+        timestamp: location?.timestamp || null,
+        locationNotes: location?.locationNotes || null,
+        videoUrl: location?.videoUrl || null,
+        duration: location?.duration || null,
+        episodeUrl: location?.episodeUrl || null,
+        episodeNumber: location?.episodeNumber || null,
+        episodeTitle: location?.episodeTitle || null,
+        event: location?.event || null,
+        eventDate: location?.eventDate || null,
+        eventLocation: location?.eventLocation || null,
+        scriptureBook: location?.scriptureBook || null,
+        canto: location?.canto || null,
+        hymn: location?.hymn || null,
       },
     });
     revalidatePath("/dashboard");
     revalidatePath("/dashboard/snippets");
     revalidatePath("/dashboard/tags");
+    revalidatePath("/dashboard/sources");
     return { success: true, snippet };
   } catch (error) {
     console.error("Failed to create snippet:", error);

@@ -89,19 +89,65 @@ model Tag {
   @@map("tag")
 }
 
+enum SourceType {
+  BOOK
+  WEB_ARTICLE
+  VIDEO
+  SACRED_SCRIPTURE
+  PODCAST
+  ACADEMIC_PAPER
+  PERSON
+  OTHER
+}
+
 model Source {
-  id        String   @id @default(cuid())
+  id        String     @id @default(cuid())
   title     String
   author    String?
+  type      SourceType @default(OTHER)
   userId    String
-  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  user      User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
 
-  snippets  Snippet[]
+  // Book-specific
+  isbn          String?
+  publisher     String?
+  edition       String?
+  volume        String?
+  yearPublished String?
+
+  // Web Article-specific
+  url          String?
+  websiteName  String?
+  dateAccessed String?
+
+  // Video-specific (channel-level info only)
+  platform String?
+  channel  String?
+
+  // Sacred Scripture-specific
+  scriptureName String?
+  tradition     String?
+  canon         String?
+  translation   String?
+
+  // Podcast-specific (show-level info only)
+  host String?
+
+  // Academic Paper-specific
+  doi         String?
+  journal     String?
+  institution String?
+
+  // Freeform notes
+  notes String?
+
+  snippets Snippet[]
 
   @@map("source")
 }
+
 model Snippet {
   id        String   @id @default(cuid())
   content   String
@@ -113,5 +159,34 @@ model Snippet {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
+  // Location reference fields (common)
+  pageNumber    String?
+  chapter       String?
+  paragraph     String?
+  section       String?
+  verse         String?
+  timestamp     String?
+  locationNotes String?
+
+  // Video snippet fields
+  videoUrl  String?
+  duration  String?
+
+  // Podcast snippet fields
+  episodeUrl    String?
+  episodeNumber String?
+  episodeTitle  String?
+
+  // Person snippet fields
+  event         String?
+  eventDate     String?
+  eventLocation String?
+
+  // Sacred Scripture snippet fields
+  scriptureBook String?
+  canto         String?
+  hymn          String?
+
   @@map("snippet")
 }
+
